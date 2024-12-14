@@ -2,9 +2,9 @@ project:
   type: book
 
 book:
-  title: "coding_clurb"
-  author: "Norah Jones"
-  date: "12/14/2024"
+  title: "Phanstiel Lab Coding Club"
+  author: "JP / Grace / Tooba / Emma"
+  date: "12/16/2024"
   chapters:
     - index.qmd
     - intro.qmd
