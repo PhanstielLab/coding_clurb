@@ -1,0 +1,4 @@
+---
+title: your bash profile!
+author: JP / Grace / Emma / Tooba
+---

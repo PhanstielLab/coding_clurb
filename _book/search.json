@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Phanstiel Lab Coding Club",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2",
+    "text": "Preface\nThis is a Quarto book housing the notes and resources for the weekly Phanstiel Lab Coding Club!\nWe’re hoping to use this space to share resources, code snippets, and other helpful information for the computational students, postdocs, and Dougs of the lab.\nCurrently (as of Dec 2024), we meet every Monday at 1pm!\nHere’s a list of things we plan to discuss:\nWishlist:\n\nGO analysis / Homer\nWorkflow management - snakemake/make/nextflow\ngithub / branches & merging\ngranges/ginteractions/annotation hub\nJuicer\nMotif analysis\nDESeq2\nTidyomics\nPackage dev\ndocker/conda\nCode semantics/structure - linters\nslurm/longleaf\nAliases - share your bash_profile\n.ssh keys!\nGlobus!\nMultipanel figures with plotgardner\nIntro to java\nIntro to python\nDashboard\nShiny\nadvancedR\nQuarto/RMarkdown\nTool sharing\nDeeptools\nSEMplR - MotifBreaker\nNetwork Analysis\nMachine Learning\nClustering - KMeans, PCA\nGoogle scripting\nIDEs - vscode, jupyter, pycharm, ondemand\ntexteditors",
     "crumbs": [
       "Preface"
     ]
@@ -37,6 +37,26 @@
     "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
     "crumbs": [
       "References"
+    ]
+  },
+  {
+    "objectID": "bashProfile.html",
+    "href": "bashProfile.html",
+    "title": "1  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Summary</span>"
+    ]
+  },
+  {
+    "objectID": "sshKeys.html",
+    "href": "sshKeys.html",
+    "title": "2  SSH Keys",
+    "section": "",
+    "text": "What are SSH keys?",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>SSH Keys</span>"
     ]
   }
 ]
