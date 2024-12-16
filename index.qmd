@@ -42,6 +42,9 @@ Wishlist:
 - IDEs - vscode, jupyter, pycharm, ondemand
 - texteditors
 
+# Past Coding Clubs {.unnumbered}
+
+- 12/16/24: `.bashrc`/`.bash_profile` & snakemake hello world
 
 
 
