@@ -3,8 +3,33 @@ title: snakemake
 author: Grace Kenney
 ---
 
-Part 1 - Hello World!
+## Part 1 - Hello World!
+*12/16/2023*
 
+### First Hello World rule
+First, make a new file called `Snakefile` and within this file, let's make a simple rule called `all`:
+```
+rule all:
+    output:
+        "hello_world.txt"
+    shell:
+        "echo Hello World! > hello_world.txt"
+```
+This rule expects an output file called `hello_world.txt` and will run the process outlined in the `shell` section to create that file.
+
+To run this, go back to the shell and run:
+```
+snakemake --cores 1
+```
+
+Now we should see a new file called `hello_world.txt` in our working directory and the file should contain the text "Hello World".
+
+Congratulations! You just made your first snakemake workflow!!
+
+### Second Hello World rule
+Now, let's start to build a workflow that has multiple rules. In the previous example, we had a single rule called `all`. In snakemake `all` is a special rule name. By default, snakemake will always try to run the `all` rule. 
+
+Let's make a new rule called `say_hello` and pass it the same arguments from our previous workflow and change our `all` rule to just have an input that is equivalent to the output of the `say_hello` rule:
 ```
 rule all:
     input:
@@ -15,4 +40,20 @@ rule say_hello:
         "hello_world.txt"
     shell:
         "echo Hello World! > hello_world.txt"
+```
+Now, let's try to run the snakefile again with the same command (if the hello_world.txt file still exists from the previous example, delete it before running):
+```
+snakemake --cores 1
+```
+We should now see a new hello_world.txt file that is identical to the previous. The logic of what's happening here:
+1. snakemake first tries to run the `all` rule
+2. it sees that in order to run the `all` rule, it needs an input file hello_world.txt
+3. it looks through all of the rules for a rule that has hello_world.txt as an output file and finds say_hello
+4. it runs say_hello to make hello_world.txt
+5. it goes back to the `all` rule and since we have no other required input and we didn't ask the `all` rule to do anything, the `all` rule is complete and we're done!
+
+**Naming the Snakefile something else: **  
+When called, snakemake will look for a file named `Snakefile` or `snakefile` by default. If you would like to name your pipeline something else, you need to tell snakemake what file to run with the `-s` option liek this:  
+```
+snakemake --cores 1 -s [snakefile_name]
 ```

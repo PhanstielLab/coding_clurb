@@ -136,7 +136,17 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#part-1---hello-world" id="toc-part-1---hello-world" class="nav-link active" data-scroll-target="#part-1---hello-world"><span class="header-section-number">3.1</span> Part 1 - Hello World!</a>
+  <ul class="collapse">
+  <li><a href="#first-hello-world-rule" id="toc-first-hello-world-rule" class="nav-link" data-scroll-target="#first-hello-world-rule"><span class="header-section-number">3.1.1</span> First Hello World rule</a></li>
+  <li><a href="#second-hello-world-rule" id="toc-second-hello-world-rule" class="nav-link" data-scroll-target="#second-hello-world-rule"><span class="header-section-number">3.1.2</span> Second Hello World rule</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -164,9 +174,46 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This is snakemake!</p>
+<section id="part-1---hello-world" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="part-1---hello-world"><span class="header-section-number">3.1</span> Part 1 - Hello World!</h2>
+<p><em>12/16/2023</em></p>
+<section id="first-hello-world-rule" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="first-hello-world-rule"><span class="header-section-number">3.1.1</span> First Hello World rule</h3>
+<p>First, make a new file called <code>Snakefile</code> and within this file, let’s make a simple rule called <code>all</code>:</p>
+<pre><code>rule all:
+    output:
+        "hello_world.txt"
+    shell:
+        "echo Hello World! &gt; hello_world.txt"</code></pre>
+<p>This rule expects an output file called <code>hello_world.txt</code> and will run the process outlined in the <code>shell</code> section to create that file.</p>
+<p>To run this, go back to the shell and run:</p>
+<pre><code>snakemake --cores 1</code></pre>
+<p>Now we should see a new file called <code>hello_world.txt</code> in our working directory and the file should contain the text “Hello World”.</p>
+<p>Congratulations! You just made your first snakemake workflow!!</p>
+</section>
+<section id="second-hello-world-rule" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="second-hello-world-rule"><span class="header-section-number">3.1.2</span> Second Hello World rule</h3>
+<p>Now, let’s start to build a workflow that has multiple rules. In the previous example, we had a single rule called <code>all</code>. In snakemake <code>all</code> is a special rule name. By default, snakemake will always try to run the <code>all</code> rule.</p>
+<p>Let’s make a new rule called <code>say_hello</code> and pass it the same arguments from our previous workflow and change our <code>all</code> rule to just have an input that is equivalent to the output of the <code>say_hello</code> rule:</p>
+<pre><code>rule all:
+    input:
+        "hello_world.txt"
+
+rule say_hello:
+    output:
+        "hello_world.txt"
+    shell:
+        "echo Hello World! &gt; hello_world.txt"</code></pre>
+<p>Now, let’s try to run the snakefile again with the same command (if the hello_world.txt file still exists from the previous example, delete it before running):</p>
+<pre><code>snakemake --cores 1</code></pre>
+<p>We should now see a new hello_world.txt file that is identical to the previous. The logic of what’s happening here: 1. snakemake first tries to run the <code>all</code> rule 2. it sees that in order to run the <code>all</code> rule, it needs an input file hello_world.txt 3. it looks through all of the rules for a rule that has hello_world.txt as an output file and finds say_hello 4. it runs say_hello to make hello_world.txt 5. it goes back to the <code>all</code> rule and since we have no other required input and we didn’t ask the <code>all</code> rule to do anything, the <code>all</code> rule is complete and we’re done!</p>
+<p><strong>Naming the Snakefile something else: </strong><br>
+When called, snakemake will look for a file named <code>Snakefile</code> or <code>snakefile</code> by default. If you would like to name your pipeline something else, you need to tell snakemake what file to run with the <code>-s</code> option liek this:</p>
+<pre><code>snakemake --cores 1 -s [snakefile_name]</code></pre>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
