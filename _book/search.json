@@ -58,5 +58,12 @@
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>SSH Keys</span>"
     ]
+  },
+  {
+    "objectID": "snakemake.html",
+    "href": "snakemake.html",
+    "title": "3  snakemake",
+    "section": "",
+    "text": "This is snakemake!"
   }
 ]
