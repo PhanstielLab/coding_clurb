@@ -1,0 +1,35 @@
+---
+title: your bash profile!
+author: JP / Grace / Emma / Tooba
+---
+
+## .bash_profile vs .bashrc
+*12/16/2024*
+
+Both `.bash_profile` and `.bashrc` are found in your home directory (`~`). A `.bashrc` is loaded every time you start a new bash session. A `.bash_profile` is only loaded when you log in or tell bash to act as a login shell.
+
+**Examples: **  
+- Logging into longleaf will load both your `.bashrc` and `.bash_profile`.
+- Starting an interactive session will only load your `.bashrc`
+- Starting a screen/tmux session only loads `.bashrc`
+
+Either files can be loaded by sourcing them directly. ie: `source ~/.bashrc`
+
+## .bash_profile Favorites
+*12/16/2024*
+
+```
+# change directory to work, users, or proj space
+alias work='cd /work/users/[initial/initial/onyen]'
+alias user='cd /users/[initial/initial/onyen]
+alias proj='cd /proj/phanstiel_lab/'
+
+# check slurm queue status
+alias sq='squeue -u [onyen]'
+
+# start a one hour interactive session
+alias interact='srun -p interact -N 1 -n 1 --mem=4g --pty /bin/bash'
+
+# list all files
+alias ll='ls -al'
+```

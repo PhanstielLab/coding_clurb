@@ -1,0 +1,206 @@
+---
+title: snakemake 
+author: Grace Kenney
+---
+
+## Part 1 - Hello World!
+*12/16/2024*
+
+### First Hello World rule
+First, make a new file called `Snakefile` and within this file, let's make a simple rule called `all`:
+```
+rule all:
+    output:
+        "hello_world.txt"
+    shell:
+        "echo Hello World! > hello_world.txt"
+```
+This rule expects an output file called `hello_world.txt` and will run the process outlined in the `shell` section to create that file.
+
+To run this, go back to the shell and run:
+```
+snakemake --cores 1
+```
+
+Now we should see a new file called `hello_world.txt` in our working directory and the file should contain the text "Hello World".
+
+Congratulations! You just made your first snakemake workflow!!
+
+### Second Hello World rule
+Now, let's start to build a workflow that has multiple rules. In the previous example, we had a single rule called `all`. In snakemake `all` is a special rule name. By default, snakemake will always try to run the `all` rule. 
+
+Let's make a new rule called `say_hello` and pass it the same arguments from our previous workflow and change our `all` rule to just have an input that is equivalent to the output of the `say_hello` rule:
+```
+rule all:
+    input:
+        "hello_world.txt"
+
+rule say_hello:
+    output:
+        "hello_world.txt"
+    shell:
+        "echo Hello World! > hello_world.txt"
+```
+Now, let's try to run the snakefile again with the same command (if the hello_world.txt file still exists from the previous example, delete it before running):
+```
+snakemake --cores 1
+```
+We should now see a new hello_world.txt file that is identical to the previous. The logic of what's happening here:
+1. snakemake first tries to run the `all` rule
+2. it sees that in order to run the `all` rule, it needs an input file hello_world.txt
+3. it looks through all of the rules for a rule that has hello_world.txt as an output file and finds say_hello
+4. it runs say_hello to make hello_world.txt
+5. it goes back to the `all` rule and since we have no other required input and we didn't ask the `all` rule to do anything, the `all` rule is complete and we're done!
+
+**Naming the Snakefile something else: **  
+When called, snakemake will look for a file named `Snakefile` or `snakefile` by default. If you would like to name your pipeline something else, you need to tell snakemake what file to run with the `-s` option liek this:  
+```
+snakemake --cores 1 -s [snakefile_name]
+```
+
+## Part 2 - Hello Names!
+*1/6/2025*
+
+**Objective:** Use wildcards to run a single rule multiple times with different input.
+
+### Dry Run
+
+A useful tip when expanding the functionality of your snakemake workflow is to do a "dry-run" of the workflow beforehand. To do this we add a `-n` to our snakemake command. Additionally, printing the commands the workflow intends to run can be helpful with the `-p` option. 
+```
+snakemake --cores 1 -s [snakefile_name] -p -n
+```
+
+### Hello Name
+
+Let's say we want to say hello to some string stored in a variable instead of hard coding in the word "World". (We want the output of our process to be "Hello [some_name]").
+
+Let's make a new snakemake file called `hello_name.Snakefile` for our new workflow. We can first store the name we want to use in a global variable at the start of our script and then replace `World` with this new variable:
+
+```
+NAME = "Tooba"
+
+rule all:
+    input:
+        "hello_" + NAME + ".txt"
+
+rule say_hello:
+    output:
+        "hello_" + NAME + ".txt"
+    shell:
+        "echo Hello {NAME} > {output}"
+```
+
+Let's try to run this workflow. Since we gave our workflow a name other than `Snakefile`, we have to specify the file explicitly. Let's also do a dry-run before executing the workflow:
+```
+snakemake -s hello_name.Snakefile --cores 1 -p -n
+```
+
+This should produce output that looks like this:
+```
+Building DAG of jobs...
+Job counts:
+	count	jobs
+	1	all
+	1	say_hello
+	2
+
+[Mon Jan  6 12:26:21 2025]
+rule say_hello:
+    output: hello_Tooba.txt
+    jobid: 1
+
+echo Hello Tooba > hello_Tooba.txt
+
+[Mon Jan  6 12:26:21 2025]
+localrule all:
+    input: hello_Tooba.txt
+    jobid: 0
+
+Job counts:
+	count	jobs
+	1	all
+	1	say_hello
+	2
+This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+```
+
+From this, we can see that the workflow wants to run two rules, `all` and `say_hello`. `say_hello` will run the command `echo Hello Tooba > hello_Tooba.txt` and `all` runs nothing.
+
+This looks good, so let's execute the workflow now by removing the `-n` dry-run option:
+```
+snakemake -s hello_name.Snakefile --cores 1 -p
+```
+
+You should now see a new file called `hello_Tooba.txt` that contains `Hello Tooba`.
+
+### Hello Names List
+
+Now, let's expand this to running this workflow for multiple names. What if want to say hello to Tooba, JP, and Emma, but we don't want to have to run this workflow 3 times.
+
+Let's go back into our `hello_name.Snakefile` file and change our `NAME` variable to `NAMES` and store a list of names we want to say hello to. Next, we'll use the `expand` function within the inputs of our `all` rule to create an expected input file for each name in our list. Lastly, we want to adjust our `say_hello` rule to use the `name` our wildcard namespace. (more on this later).
+
+Altogether, it will look like this:
+```
+NAMES = ["Tooba", "JP"]
+
+rule all:
+    input:
+        expand("hello_{name}.txt", name=NAMES)
+
+rule say_hello:
+    output:
+        "hello_{name}.txt"
+    shell:
+        "echo Hello {wildcards.name} > {output}"
+```
+
+Let's dry-run this process first:
+```
+snakemake -s hello_name.Snakefile --cores 1 -pn
+```
+The output should look like this:
+```
+Building DAG of jobs...
+Job counts:
+	count	jobs
+	1	all
+	2	say_hello
+	3
+
+[Mon Jan  6 12:58:43 2025]
+rule say_hello:
+    output: hello_JP.txt
+    jobid: 1
+    wildcards: name=JP
+
+echo Hello JP > hello_JP.txt
+
+[Mon Jan  6 12:58:43 2025]
+rule say_hello:
+    output: hello_Tooba.txt
+    jobid: 2
+    wildcards: name=Tooba
+
+echo Hello Tooba > hello_Tooba.txt
+
+[Mon Jan  6 12:58:43 2025]
+localrule all:
+    input: hello_Tooba.txt, hello_JP.txt
+    jobid: 0
+
+Job counts:
+	count	jobs
+	1	all
+	2	say_hello
+	3
+This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+```
+
+Now let's execute the workflow by removing the `-n` flag. This should create two new files, `hello_JP.txt` and `hello_Tooba.txt` with respective "Hello" greetings within.
+
+**Explaination:** Snakemake looks at the `all` rule first and sees that it needs to make files `hello_Tooba.txt` and `hello_JP.txt` to complete the rule.
+
+You can learn more about wildcards in snakemake (here)[https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#snakefiles-wildcards].
+
+
+

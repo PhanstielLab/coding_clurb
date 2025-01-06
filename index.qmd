@@ -1,0 +1,51 @@
+# Preface {.unnumbered}
+
+This is a Quarto book housing the notes and resources for the weekly Phanstiel Lab Coding Club!
+
+We're hoping to use this space to share resources, code snippets, and other helpful information for the computational students, postdocs, and Dougs of the lab.
+
+Currently (as of Dec 2024), we meet every Monday at 1pm!
+
+Here's a list of things we plan to discuss:
+
+Wishlist:
+
+- GO analysis / Homer
+- Workflow management - snakemake/make/nextflow
+- github / branches & merging
+- granges/ginteractions/annotation hub
+- Juicer
+- Motif analysis
+- DESeq2
+- Tidyomics
+- Package dev
+- docker/conda
+- Code semantics/structure - linters
+- slurm/longleaf
+- Aliases - share your bash_profile
+- .ssh keys!
+- Globus!
+- Multipanel figures with plotgardner
+- Intro to java
+- Intro to python
+- Dashboard
+- Shiny
+- advancedR
+- Quarto/RMarkdown
+- Tool sharing
+- Deeptools
+- SEMplR - MotifBreaker
+- Network Analysis
+- Machine Learning
+- Clustering - KMeans, PCA
+- Google scripting
+- IDEs - vscode, jupyter, pycharm, ondemand
+- texteditors
+
+# Past Coding Clubs {.unnumbered}
+
+- 12/16/24: `.bashrc`/`.bash_profile` & snakemake hello world
+
+
+
+
